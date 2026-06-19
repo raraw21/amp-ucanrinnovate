@@ -1,7 +1,13 @@
-const express = require('express');
-const app = express();
+const http = require('http');
+const fs = require('fs');
 
-app.use(express.static('.'));
+const port = process.env.PORT || 3000;
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT);
+http.createServer((req, res) => {
+  fs.readFile('index.html', (err, data) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(data);
+  });
+}).listen(port);
+
+console.log(`Server running on ${port}`);
